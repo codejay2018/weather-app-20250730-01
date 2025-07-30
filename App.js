@@ -8,28 +8,25 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>결과 : {number}</Text>
-      <View style={styles.buttonContainer}>
-        <Button title="증가" onPress={()=>setNumber(number + 1)}/>
-        <Button title="감소" onPress={()=>setNumber(number - 1)}/>
-      </View>
+      <View style={styles.v1}></View>
+      <View style={styles.v2}></View>
+      <View style={styles.v3}></View>
       <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  container:{
+   flex:1
   },
-  title:{
-    fontSize:50
+  v1:{
+    flex:1, backgroundColor:"red"
+  },  
+  v2:{
+    flex:1, backgroundColor:"darkorange"
+  },  
+  v3:{
+    flex:1, backgroundColor:"green"
   },
-  buttonContainer:{
-    flexDirection: "row",
-    gap:10
-  }
 });
