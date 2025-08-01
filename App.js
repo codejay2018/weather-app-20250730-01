@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Button, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import * as Location from 'expo-location';
-import { GOOGLE_API_KEY } from '@env';
+import { GOOGLE_API_KEY, OPEN_WEATHER_API_KEY } from '@env';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -14,7 +14,11 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [permitted, setPermitted] = useState(true);
   const [cityName, setCityName] = useState("Silim");
+  const [dailyWeather, setDailyWeather] = useState([]);
 
+  const loadWeaterData = async () => {
+    const url = `https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}`;
+  }
 
   const locationData = async () => {
     const {granted} = await Location.requestForegroundPermissionsAsync();
@@ -50,12 +54,19 @@ export default function App() {
       console.log("address : ", address);
       setCityName(address[0].city);
     }
-
+  
+    const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude={alerts}&appid=${OPEN_WEATHER_API_KEY}`;
+    const resWeather = await fetch(weatherUrl);
+    const dataWeather = await resWeather.json();
+    console.log("dataWeather : ", dataWeather);
     
   }
 
   useEffect(()=>{
+    
     locationData();
+    loadWeaterData();
+
   }, []);
 
   return (
