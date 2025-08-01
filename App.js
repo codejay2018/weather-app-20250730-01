@@ -30,8 +30,9 @@ export default function App() {
     console.log("latitude : ", latitude);
     console.log("longitude : ", longitude);
 
-    const bUseGoogleGeoLocation = true;
+    const bUseGoogleGeoLocation = false;
     if(bUseGoogleGeoLocation){
+      // 웹 플렛폼에서도 동작한다, 과금이 발생할 수 있다.
       console.log("GOOGLE_API_KEY : ", GOOGLE_API_KEY);
       const API_URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
 
@@ -39,11 +40,12 @@ export default function App() {
 
       const data = await res.json();
       console.log("data : ", data);
-      const address = data.results[7].formatted_address;
+      const address = data.results[7].address_components[0].short_name;
       console.log("address : ", address);
       setCityName(address);
 
     }else{
+      // 모바일에서만 동작한다면, 이코드를 사용하자.
       const address = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
       console.log("address : ", address);
       setCityName(address[0].city);
