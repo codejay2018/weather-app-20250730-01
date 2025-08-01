@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import * as Location from 'expo-location';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -8,10 +9,39 @@ export default function App() {
 
   const [number, setNumber] = useState(0);
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [permitted, setPermitted] = useState(true);
+  const [cityName, setCityName] = useState("Silim");
+
+
+  const locationData = async () => {
+    const {granted} = await Location.requestForegroundPermissionsAsync();
+    console.log("granted : ", granted);
+    
+    if(!granted){
+      setPermitted(false);
+      setErrorMsg("위치사용이 거부되었습니다.");
+      return;
+    }
+
+    const {coords:{latitude, longitude},} = await Location.getCurrentPositionAsync({accuracy:5});
+    console.log("latitude : ", latitude);
+    console.log("longitude : ", longitude);
+
+    const address = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
+    console.log("address : ", address);
+    setCityName(address[0].city);
+  }
+
+  useEffect(()=>{
+    locationData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.cityContainer}>
-        <Text style={styles.city}>Silim</Text>
+        <Text style={styles.city}>{cityName}</Text>
       </View>
       <View style={styles.regDateCon}>
         <Text style={styles.regDate}>7월 31일 (목) 오후 5:35</Text>
