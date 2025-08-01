@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Button, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import * as Location from 'expo-location';
+import { GOOGLE_API_KEY } from '@env';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -29,9 +30,26 @@ export default function App() {
     console.log("latitude : ", latitude);
     console.log("longitude : ", longitude);
 
-    const address = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
-    console.log("address : ", address);
-    setCityName(address[0].city);
+    const bUseGoogleGeoLocation = true;
+    if(bUseGoogleGeoLocation){
+      console.log("GOOGLE_API_KEY : ", GOOGLE_API_KEY);
+      const API_URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
+
+      const res = await fetch(API_URL);
+
+      const data = await res.json();
+      console.log("data : ", data);
+      const address = data.results[7].formatted_address;
+      console.log("address : ", address);
+      setCityName(address);
+
+    }else{
+      const address = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
+      console.log("address : ", address);
+      setCityName(address[0].city);
+    }
+
+    
   }
 
   useEffect(()=>{
