@@ -15,6 +15,39 @@ import WeatherDesc from './WeatherDesc';
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 
+const useRegDate = () => {
+  const [currentDate, setCurrentDate] = useState(null);
+
+  useEffect(() => {
+    const updateDate = () => {
+      const date = new Date();
+
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+      const dayOfWeek = daysOfWeek[date.getDay()];
+
+      let hours = date.getHours();
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? '오후' : '오전';
+      hours = hours % 12 || 12;
+
+      const formattedDate = `${year}년 ${month}월 ${day}일 (${dayOfWeek}) ${ampm} ${hours}:${minutes}`;
+
+      setCurrentDate(formattedDate);
+    };
+
+    updateDate(); // 처음 실행
+    const interval = setInterval(updateDate, 60000); // 1분마다 갱신
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return currentDate;
+};
+
 export default function App() {
 
   const [location, setLocation] = useState(null);
@@ -23,6 +56,7 @@ export default function App() {
   const [cityName, setCityName] = useState("Silim");
   const [dailyWeather, setDailyWeather] = useState([]);
 
+  const currentDate = useRegDate();
 
   const locationData = async () => {
 
@@ -88,7 +122,7 @@ export default function App() {
         dataWeather = await resWeather.json();
       }
 
-      console.log("dataWeather : ", dataWeather);
+      // console.log("dataWeather : ", dataWeather);
       console.log("dataWeather.daily : ", dataWeather.daily[0].dt);
     
       // setDailyWeather(dataWeather.daily);
@@ -113,7 +147,7 @@ export default function App() {
         <Text style={styles.city}>{cityName}</Text>
       </View>
       <View style={styles.regDateCon}>
-        <Text style={styles.regDate}>7월 31일 (목) 오후 5:35</Text>
+        <Text style={styles.regDate}>{currentDate}</Text>
       </View>
       <ScrollView 
         horizontal 
