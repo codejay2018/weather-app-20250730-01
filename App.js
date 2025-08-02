@@ -9,415 +9,10 @@ import {
   View } from 'react-native';
 import * as Location from 'expo-location';
 import { GOOGLE_API_KEY, OPEN_WEATHER_API_KEY } from '@env';
+import { dummyWeatherData } from "./dummyWeatherData"
+import WeatherDesc from './WeatherDesc';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-
-const dummyWeatherData = 
-{
-   "lat":33.44,
-   "lon":-94.04,
-   "timezone":"America/Chicago",
-   "timezone_offset":-18000,
-   "current":{
-      "dt":1684929490,
-      "sunrise":1684926645,
-      "sunset":1684977332,
-      "temp":292.55,
-      "feels_like":292.87,
-      "pressure":1014,
-      "humidity":89,
-      "dew_point":290.69,
-      "uvi":0.16,
-      "clouds":53,
-      "visibility":10000,
-      "wind_speed":3.13,
-      "wind_deg":93,
-      "wind_gust":6.71,
-      "weather":[
-         {
-            "id":803,
-            "main":"Clouds",
-            "description":"broken clouds",
-            "icon":"04d"
-         }
-      ]
-   },
-   "minutely":[
-      {
-         "dt":1684929540,
-         "precipitation":0
-      },
-      {
-         "dt":1684929540,
-         "precipitation":0
-      },
-      {
-         "dt":1684929540,
-         "precipitation":0
-      },
-
-   ],
-   "hourly":[
-      {
-         "dt":1684926000,
-         "temp":292.01,
-         "feels_like":292.33,
-         "pressure":1014,
-         "humidity":91,
-         "dew_point":290.51,
-         "uvi":0,
-         "clouds":54,
-         "visibility":10000,
-         "wind_speed":2.58,
-         "wind_deg":86,
-         "wind_gust":5.88,
-         "weather":[
-            {
-               "id":803,
-               "main":"Clouds",
-               "description":"broken clouds",
-               "icon":"04n"
-            }
-         ],
-         "pop":0.15
-      },
-      {
-         "dt":1684926000,
-         "temp":292.01,
-         "feels_like":292.33,
-         "pressure":1014,
-         "humidity":91,
-         "dew_point":290.51,
-         "uvi":0,
-         "clouds":54,
-         "visibility":10000,
-         "wind_speed":2.58,
-         "wind_deg":86,
-         "wind_gust":5.88,
-         "weather":[
-            {
-               "id":803,
-               "main":"Clouds",
-               "description":"broken clouds",
-               "icon":"04n"
-            }
-         ],
-         "pop":0.15
-      },
-   ],
-   "daily":[
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":29.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":299.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":299.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":299.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":299.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":299.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-      {
-         "dt":1684951200,
-         "sunrise":1684926645,
-         "sunset":1684977332,
-         "moonrise":1684941060,
-         "moonset":1684905480,
-         "moon_phase":0.16,
-         "summary":"Expect a day of partly cloudy with rain",
-         "temp":{
-            "day":299.03,
-            "min":290.69,
-            "max":300.35,
-            "night":291.45,
-            "eve":297.51,
-            "morn":292.55
-         },
-         "feels_like":{
-            "day":299.21,
-            "night":291.37,
-            "eve":297.86,
-            "morn":292.87
-         },
-         "pressure":1016,
-         "humidity":59,
-         "dew_point":290.48,
-         "wind_speed":3.98,
-         "wind_deg":76,
-         "wind_gust":8.92,
-         "weather":[
-            {
-               "id":500,
-               "main":"Rain",
-               "description":"light rain",
-               "icon":"10d"
-            }
-         ],
-         "clouds":92,
-         "pop":0.47,
-         "rain":0.15,
-         "uvi":9.23
-      },
-
-   ],
-    "alerts": [
-    {
-      "sender_name": "NWS Philadelphia - Mount Holly (New Jersey, Delaware, Southeastern Pennsylvania)",
-      "event": "Small Craft Advisory",
-      "start": 1684952747,
-      "end": 1684988747,
-      "description": "...SMALL CRAFT ADVISORY REMAINS IN EFFECT FROM 5 PM THIS\nAFTERNOON TO 3 AM EST FRIDAY...\n* WHAT...North winds 15 to 20 kt with gusts up to 25 kt and seas\n3 to 5 ft expected.\n* WHERE...Coastal waters from Little Egg Inlet to Great Egg\nInlet NJ out 20 nm, Coastal waters from Great Egg Inlet to\nCape May NJ out 20 nm and Coastal waters from Manasquan Inlet\nto Little Egg Inlet NJ out 20 nm.\n* WHEN...From 5 PM this afternoon to 3 AM EST Friday.\n* IMPACTS...Conditions will be hazardous to small craft.",
-      "tags": [
-
-      ]
-    },
-    {
-      "sender_name": "NWS Philadelphia - Mount Holly (New Jersey, Delaware, Southeastern Pennsylvania)",
-      "event": "Small Craft Advisory",
-      "start": 1684952747,
-      "end": 1684988747,
-      "description": "...SMALL CRAFT ADVISORY REMAINS IN EFFECT FROM 5 PM THIS\nAFTERNOON TO 3 AM EST FRIDAY...\n* WHAT...North winds 15 to 20 kt with gusts up to 25 kt and seas\n3 to 5 ft expected.\n* WHERE...Coastal waters from Little Egg Inlet to Great Egg\nInlet NJ out 20 nm, Coastal waters from Great Egg Inlet to\nCape May NJ out 20 nm and Coastal waters from Manasquan Inlet\nto Little Egg Inlet NJ out 20 nm.\n* WHEN...From 5 PM this afternoon to 3 AM EST Friday.\n* IMPACTS...Conditions will be hazardous to small craft.",
-      "tags": [
-
-      ]
-    },
-  ]
-};
 
 
 export default function App() {
@@ -430,6 +25,8 @@ export default function App() {
 
 
   const locationData = async () => {
+
+    console.log("위치사용 권한 요청 시도~");
     const {granted} = await Location.requestForegroundPermissionsAsync();
     console.log("granted : ", granted);
     
@@ -439,12 +36,14 @@ export default function App() {
       return;
     }
 
+    console.log("Expo.Location으로 위도 경도 얻기~")
     const {coords:{latitude, longitude},} = await Location.getCurrentPositionAsync({accuracy:5});
     console.log("latitude : ", latitude);
     console.log("longitude : ", longitude);
 
     const bUseGoogleGeoLocation = false;
     if(bUseGoogleGeoLocation){
+      console.log("위도, 경도르 사용해서 구글에서 주소를 얻어와요~");
       // 웹 플렛폼에서도 동작한다, 과금이 발생할 수 있다.
       console.log("GOOGLE_API_KEY : ", GOOGLE_API_KEY);
       const API_URL = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
@@ -454,13 +53,14 @@ export default function App() {
       const data = await res.json();
       console.log("data : ", data);
       const address = data.results[7].address_components[0].short_name;
-      console.log("address : ", address);
+      console.log("address : ", address[0].city);
       setCityName(address);
 
     }else{
+      console.log("위도, 경도르 사용해서 Expo에서 주소를 얻어와요~")
       // 모바일에서만 동작한다면, 이코드를 사용하자.
       const address = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false});
-      console.log("address : ", address);
+      console.log("address : ", address[0].city);
 
       if (address.length > 0 && address[0].city) {
         setCityName(address[0].city);
@@ -470,17 +70,34 @@ export default function App() {
 
     }
   
-    // 더미 데이터로 테스트위해 주석처리함.
-    // const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude={alerts}&units=metric&lang=kr&appid=${OPEN_WEATHER_API_KEY}`;
-    // const resWeather = await fetch(weatherUrl);
-    // const dataWeather = await resWeather.json();
-    // console.log("dataWeather : ", dataWeather);
-    const dataWeather = dummyWeatherData;
+    
+    {
+      let dataWeather = "";
+      const bUseDummyData = true;
+      if(bUseDummyData){
+        console.log("더미 데이터에서 날씨를 얻어와요~")
+        dataWeather = dummyWeatherData;
+      }else{
+        console.log("Open Weather에서 날씨를 얻어와요~")
+        console.log("OPEN_WEATHER_API_KEY : ", OPEN_WEATHER_API_KEY);
+        const weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&units=metric&lang=kr&appid=${OPEN_WEATHER_API_KEY}`;
+        // const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude={alerts}&units=metric&lang=kr&appid=${OPEN_WEATHER_API_KEY}`;
+        console.log("weatherUrl : ", weatherUrl);
+        const resWeather = await fetch(weatherUrl);
+        console.log("resWeather : ", resWeather);
+        dataWeather = await resWeather.json();
+      }
 
-    console.log("dataWeather : ", dataWeather);
-    console.log("dataWeather.daily : ", dataWeather.daily);
-  
-    setDailyWeather(dataWeather.daily);
+      console.log("dataWeather : ", dataWeather);
+      console.log("dataWeather.daily : ", dataWeather.daily[0].dt);
+    
+      // setDailyWeather(dataWeather.daily);
+      setDailyWeather(dataWeather.daily || []); // ✅ undefined 방지
+    }
+
+    
+
+
   }
 
   useEffect(()=>{
@@ -512,7 +129,8 @@ export default function App() {
             dailyWeather.map((day, index)=>(
               <View key={index} style={styles.weatherInner}>
                 <View style={styles.day}>
-                  <Text style={styles.desc}>{day.weather[0].description}</Text>
+                  <WeatherDesc day={day}/>
+                  {/* <Text style={styles.desc}>{day.weather[0].description}</Text> */}
                 </View>
                 <View style={styles.tempContainer}>
                   <Text style={styles.temp}>{
@@ -586,12 +204,12 @@ const styles = StyleSheet.create({
     justifyContent:"center",
   },  
 
-  desc:{
-    flex:1.5,
-    fontSize:25,
-    fontWeight:"bold",
-    marginTop:20,
-  },
+  // desc:{
+  //   flex:1.5,
+  //   fontSize:25,
+  //   fontWeight:"bold",
+  //   marginTop:20,
+  // },
   tempContainer:{
     flex:0.5, 
     // backgroundColor:"blue",
