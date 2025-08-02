@@ -171,7 +171,13 @@ export default function App() {
                   parseFloat(day.temp.day).toFixed(0)
                   }</Text>
                   <Text style={styles.tempSymbal}>℃</Text>
-                </View>        
+                </View>     
+                <View style={styles.weeklyForcastContainer}>
+                  <Text style={styles.weeklyForcastTitle} >Weekly Forcast</Text>
+                  <View style={styles.weeklyForcastInfo}>
+
+                  </View>
+                </View>   
               </View>
             ))
           )
@@ -218,15 +224,11 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
   },
 
-  weather:{
-    // paddingHorizontal:20,
-    // gap:20,
-    // backgroundColor:"green",
-  },
+
   weatherInner:{
     flex:3, 
     width:SCREEN_WIDTH,
-    // backgroundColor:"green"
+    // backgroundColor:"red"
   },  
   day:{
     flex:0.15,
@@ -259,7 +261,25 @@ const styles = StyleSheet.create({
     position:"absolute",
     top:70,
     right:100,
-  }
+  },
+  weeklyForcastContainer:{
+    // backgroundColor:"blue",
+    flex:0.6,
+    alignItems:"center"
+  },
+  weeklyForcastTitle:{
+    fontSize:25,
+    fontWeight:"bold",
+    // backgroundColor:"green",
+    width:"80%",
+  },
+  weeklyForcastInfo:{
+    backgroundColor:"black",
+    flex:0.6,
+    width:"80%",
+    borderRadius:10,
+    marginTop:10,
+  },
 
 
 });
