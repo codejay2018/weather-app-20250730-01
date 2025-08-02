@@ -52,7 +52,7 @@ export default function App() {
 
       const data = await res.json();
       console.log("data : ", data);
-      const address = data.results[7].address_components[0].short_name;
+      const address = data.results[6].address_components[0].short_name;
       console.log("address : ", address[0].city);
       setCityName(address);
 
